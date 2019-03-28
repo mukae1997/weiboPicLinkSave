@@ -1,0 +1,432 @@
+
+$(document).ready(function(){ 
+//几种添加节点的方法 
+//$("p").append("<b>你好吗？</b>");//向p元素中追加《b》 
+//$("<b>你好吗？</b>").appendTo("p");//将《b》追加到p元素中 
+//$("p").prepend("<b>你好吗？</b>");//向p中前置《b》 
+//$("<b>你好吗？</b>").prependTo("p");//将《b》前置到p元素中 
+//$("p").after("<b>你好吗？</b>");//向p元素后插入《b》 
+//$("<b>你好吗？</b>").insertAfter("p");//将《b》插入到p元素后边 
+//$("p").before("<b>你好吗？</b>");//在p元素之前添加《b》 
+//$("<b>你好吗？</b>").insertBefore("p");//将《b》插入到p元素前面 
+ 
+ 
+//几种删除节点的方法 
+//var $li=$("ul li:eq(1)").remove();//删除ul节点中第2个元素节点 
+//$("ul").append($li);//把刚删除的元素节点从新添加到ul元素中去 
+//$("ul li").remove("li[title!=菠萝]");//将ul元素下title属性不等于"菠萝"的li元素删除 
+//$("ul li:eq(1)").empty();//清空ul节点下第2个li元素的内容 
+ 
+//复制节点 
+/* $("ul li").click(function(){ 
+$(this).clone(true).appendTo("ul");//复制当前点击的节点，并将它追加到《ul》元素中，当添加参数时复制它的事件 
+}); 
+*/ 
+//替换节点 
+// $("p").replaceWith("<strong>你最不喜欢的水果是？</Strong>"); 
+ 
+ 
+ 
+一、使用jQuery创建元素
+1、创建元素
+$(function(){
+var $h1=$(“<h1></h1>”);
+$(“body”).append($h1);
+})
+2、创建文本
+$(function(){
+var $h1=$(“<h1>DOM文档对象模型</h1>”);
+$(“body”).append($h1);
+})
+3、创建属性
+$(function(){
+var $h1=$(“<h1 title=“一级标题”  class=“red”>DOM文档对象模型</h1>”);
+$(“body”).append($h1);
+})
+
+二、使用jQuery插入元素
+1、在节点内部插入内容
+（1）、append()方法在被选元素的结尾（仍然在内部）插入指定内容
+
+   提示：append() 和 appendTo() 方法执行的任务相同。不同之处在于：内容的位置和选择器。
+
+        语法：$(selector).append(content)
+
+   content必需。规定要插入的内容（可包含 HTML 标签）。
+
+<html>
+<head>
+<script type="text/javascript" src="/jquery/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("button").click(function(){
+    $("p").append(" <b>Hello world!</b>");
+  });
+});
+</script>
+</head>
+<body>
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+<button>在每个 p 元素的结尾添加内容</button>
+</body>
+</html>
+
+
+  使用函数来附加内容，使用函数在指定元素的结尾插入内容。
+
+        语法：$(selector).append(function(index,html))
+
+  function(index,html) 必需。规定返回待插入内容的函数。
+
+  index - 可选。接收选择器的 index 位置。
+
+  html - 可选。接收选择器的当前 HTML。
+
+<html>
+<head>
+<script type="text/javascript" src="/jquery/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("button").click(function(){
+    $("p").append(function(n){
+      return "<b>This p element has index " + n + "</b>";
+    });
+  });
+});
+</script>
+</head>
+<body>
+<h1>This is a heading</h1>
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+<button>在每个 p 元素的结尾添加内容</button>
+</body>
+</html>
+
+
+ 
+
+（2）、appendTo()方法在被选元素的结尾（仍然在内部）插入指定内容
+
+  提示：append() 和 appendTo() 方法执行的任务相同。不同之处在于：内容和选择器的位置，以及 append() 能够使用函数来附加内容。
+
+       语法：$(content).appendTo(selector)
+
+  content必需。规定要插入的内容（可包含 HTML 标签）。
+
+  selector必需。规定把内容追加到哪个元素上。
+
+<html>
+<head>
+<script type="text/javascript" src="/jquery/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("button").click(function(){
+    $("<b> Hello World!</b>").appendTo("p");
+  });
+});
+</script>
+</head>
+<body>
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+<button>在每个 p 元素的结尾添加内容</button>
+</body>
+</html>
+
+
+
+（3）、prepend() 方法在被选元素的开头（仍位于内部）插入指定内容
+
+  提示：prepend() 和 prependTo() 方法作用相同。差异在于语法：内容和选择器的位置，以及 prependTo() 无法使用函数来插入内容。
+
+        语法：$(selector).prepend(content)
+
+  content必需。规定要插入的内容（可包含 HTML 标签）。
+
+<html>
+<head>
+<script type="text/javascript" src="/jquery/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("button").click(function(){
+    $("p").prepend("<b>Hello world!</b> ");
+  });
+});
+</script>
+</head>
+<body>
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+<button>在每个 p 元素的开头插入内容</button>
+</body>
+</html>
+
+
+  使用函数来附加内容，使用函数在被选元素的开头插入指定的内容。
+
+        语法：$(selector).prepend(function(index,html))
+
+  function(index,html) 必需。规定返回待插入内容的函数。
+
+  index - 可选。接受选择器的 index 位置。
+
+  html - 可选。接受选择器的当前 HTML。
+
+<html>
+<head>
+<script type="text/javascript" src="/jquery/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("button").click(function(){
+    $("p").prepend(function(n){
+      return "<b>这个 p 元素的 index 是：" + n + "</b> ";
+    });
+  });
+});
+</script>
+</head>
+<body>
+<h1>这是一个标题</h1>
+<p>这是一个段落。</p>
+<p>这是另一个段落。</p>
+<button>在每个 p 元素的开头插入内容</button>
+</body>
+</html>
+
+
+
+
+（4）、prependTo() 方法在被选元素的开头（仍位于内部）插入指定内容
+
+  提示：prepend() 和 prependTo() 方法作用相同。差异在于语法：内容和选择器的位置，以及 prepend() 能够使用函数来插入内容。
+
+         语法：$(content).prependTo(selector)
+
+  content 必需。规定要插入的内容（可包含 HTML 标签）。
+
+  selector 必需。规定在何处插入内容。
+
+<html>
+<head>
+<script type="text/javascript" src="/jquery/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".btn1").click(function(){
+    $("<b>Hello World!</b>").prependTo("p");
+  });
+});
+</script>
+</head>
+<body>
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+<button class="btn1">在每个 p 元素的开头插入文本</button>
+</body>
+</html>
+
+
+ 
+
+2、在节点外部插入内容
+（1）、after() 方法在被选元素后插入指定的内容
+
+       语法：$(selector).after(content)
+
+   content必需。规定要插入的内容（可包含 HTML 标签）。
+
+<html>
+<head>
+<script type="text/javascript" src="/jquery/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("button").click(function(){
+    $("p").after("<p>Hello world!</p>");
+  });
+});
+</script>
+</head>
+<body>
+<p>This is a paragraph.</p>
+<button>在每个 p 元素后插入内容</button>
+</body>
+</html>
+
+
+
+
+  使用函数来插入内容，使用函数在被选元素之后插入指定的内容。
+
+        语法：$(selector).after(function(index))
+
+  function(index) 必需。规定返回待插入内容的函数。
+
+  index - 可选。接收选择器的 index 位置。
+
+<html>
+<head>
+<script type="text/javascript" src="/jquery/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("button").click(function(){
+    $("p").after(function(n){
+      return "<p>The p element above has index " + n + "</p>";
+    });
+  });
+});
+</script>
+</head>
+<body>
+<h1>This is a heading</h1>
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+<button>在每个 p 元素后插入内容</button>
+</body>
+</html>
+
+
+ 
+
+（2）、before() 方法在被选元素前插入指定的内容
+
+        语法：$(selector).before(content)
+
+    content 必需。规定要插入的内容（可包含 HTML 标签）。
+
+<html>
+<head>
+<script type="text/javascript" src="/jquery/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".btn1").click(function(){
+    $("p").before("<p>Hello world!</p>");
+  });
+});
+</script>
+</head>
+<body>
+<p>This is a paragraph.</p>
+<button class="btn1">在每个段落前面插入新的段落</button>
+</body>
+</html>
+
+
+  使用函数来插入内容，使用函数在指定的元素前面插入内容。
+
+     语法：$(selector).before(function(index))
+
+  function(index)必需。规定返回待插入内容的函数。
+
+  index - 可选。接收选择器的 index 位置。
+
+<html>
+<head>
+<script type="text/javascript" src="/jquery/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("button").click(function(){
+    $("p").before(function(n){
+      return "<p>The p element below has index " + n + "</p>";
+    });
+  });
+});
+</script>
+</head>
+<body>
+<h1>This is a heading</h1>
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+<button class="btn1">在每个段落前面插入新的段落</button>
+</body>
+</html>
+
+
+ 
+
+（3）、insertAfter()把匹配的元素插入到另一个指定的元素集合的后面
+
+  注释：如果该方法用于已有元素，这些元素会被从当前位置移走，然后被添加到被选元素之后。
+
+       语法：$(content).insertAfter(selector)
+
+  content必需。规定要插入的内容。可能的值：选择器表达式、HTML 标记
+
+  selector必需。规定在何处插入被选元素。
+
+<html>
+<head>
+<script type="text/javascript" src="/jquery/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("button").click(function(){
+    $("<span>你好！</span>").insertAfter("p");
+  });
+});
+</script>
+</head>
+<body>
+<p>这是一个段落。</p>
+<p>这是另一个段落。</p>
+<button>在每个 p 元素之后插入 span 元素</button>
+</body>
+</html>
+
+
+插入已有的元素
+
+<html>
+<head>
+<script type="text/javascript" src="/jquery/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("button").click(function(){
+    $("h1").insertAfter("p");
+  });
+});
+</script>
+</head>
+<body>
+<h1>这是一个标题</h1>
+<p>这是一个段落。</p>
+<p>这是另一个段落。</p>
+<button>在每个 p 元素之后插入 h1 元素</button>
+</body>
+</html>
+
+
+
+
+（4）、insertBefore()把匹配的元素插入到另一个指定的元素集合的前面
+
+   注释：如果该方法用于已有元素，这些元素会被从当前位置移走，然后被添加到被选元素之前。
+
+        语法：$(content).insertBefore(selector)
+
+   content 必需。规定要插入的内容。可能的值：选择器表达式、HTML 标记
+
+   selector 必需。规定在何处插入被选元素。
+
+<html>
+<head>
+<script type="text/javascript" src="/jquery/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("button").click(function(){
+    $("<span>你好！</span>").insertBefore("p");
+  });
+});
+</script>
+</head>
+<body>
+<p>这是一个段落。</p>
+<p>这是另一个段落。</p>
+<button>在每个 p 元素之前插入 span 元素</button>
+</body>
+</html>
+
+--------------------- 
+作者：A_山水子农 
+来源：CSDN 
+原文：https://blog.csdn.net/qq_27626333/article/details/51927022 
+版权声明：本文为博主原创文章，转载请附上博文链接！
