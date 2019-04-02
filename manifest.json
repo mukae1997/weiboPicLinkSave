@@ -2,7 +2,7 @@
     "name": "WeiboPicLinkSave",
     "version": "1.0",
     "description": "快速指定并获取每条微博中的目标图片链接",
-     "permissions": ["activeTab","storage"],
+     "permissions": ["activeTab","storage", "downloads", "notifications"],
      "background": {
       "scripts": ["background.js", "jquery.js"],
       "persistent": false
