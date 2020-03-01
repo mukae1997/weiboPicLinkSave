@@ -52,6 +52,7 @@ $(document).ready(function(){
 	        else if (this.value == '下载') {
 	            // console.log('markdown');
 
+	            // TODO : 只下载被选中的
 	            $(this).parent().find(".myp").each(function() {
 
 	            	var imgsrc = $(this).attr('src');
@@ -142,7 +143,14 @@ function mainFunc() {
 
 			var rawthumbLink = "http:" + imgsrc;
 			
-			var largetImgLink = rawthumbLink.replace("thumb150", "large");	
+
+			var fisrtSlice = imgsrc.indexOf('/', 2) + 1;
+			var secondSlice = imgsrc.indexOf('/', fisrtSlice);
+
+
+			var replaceTarget =  imgsrc.substring(fisrtSlice, secondSlice);
+			// console.log(imgsrc[fisrtSlice], imgsrc[secondSlice]);
+			var largetImgLink = rawthumbLink.replace(replaceTarget, "large");	
 
 			var pelement = document.createElement("p");
 			pelement.innerHTML = largetImgLink;
