@@ -2,8 +2,8 @@ var lastScrollAnchor = 0;
 var lastAddIndex = 0;
 document.addEventListener('DOMContentLoaded', function()
 {
-	console.log('我被执行了！');
-	setTimeout('mainFunc()',2000); 
+	console.log('我被执行了！test');
+	setTimeout('mainFunc()',3000); 
 
 
 });
@@ -97,7 +97,13 @@ function mainFunc() {
 
 	// createPicTip(); // 左上角创建一个 fixed 的区域用于鼠标移到连接上时展示图片
 
-	var nodes = document.getElementsByClassName('WB_detail');
+	// var weiboContainerClassName = 'wbpro-scroller-item';
+	var weiboContainerClassName = 'wbpro-feed-content';
+	var picNodeClassName = 'woo-picture-main';
+
+
+
+	var nodes = document.getElementsByClassName(weiboContainerClassName);
 	console.log("共有",nodes.length,"条微博");
 	
 	var debugmax = 10000;
@@ -106,15 +112,21 @@ function mainFunc() {
  
 	var ni = 0;
 	for (ni in nodes) {
-
+		// console.log(ni)
 		if (isNaN(parseInt(ni))) continue;
 		if (parseInt(ni) < lastAddIndex) continue;
 		var e = nodes[ni];
 		// console.log(e);
-		var linknodes = e.getElementsByClassName("WB_pic");
-		// console.log("第", ni,"条微博","图片量", linknodes.length);
+		var contentNode = e.getElementsByClassName('wbpro-feed-content')[0];
+		// console.log(contentNode);
+
+
+
+		var linknodes = e.getElementsByClassName(picNodeClassName);
+		 console.log("第", ni,"条微博","图片量", linknodes.length);
 			// console.log(linknodes)
 		var wpldiv = null;	
+
 		if (linknodes.length > 0) {
 			// add function div to WB_pic div
 			wpldiv = document.createElement('div');
@@ -125,15 +137,15 @@ function mainFunc() {
 			// add radio buttons 
  			
 			AddNewRadio("raw", "codetype", wpldiv);
-
 			AddNewRadio("Markdown", "codetype", wpldiv);
 			AddNewRadio("下载", "codetype", wpldiv);
 
 			e.appendChild(wpldiv);
+			// contentNode.appendChild(wpldiv);
 
 		}	
 
- 
+ 		var httpsheader = "https://"
 		for (lni in linknodes) {
 			if (isNaN(parseInt(lni))) continue;
 			var ln = linknodes[lni];
@@ -141,23 +153,28 @@ function mainFunc() {
 			var imgtag = ln.getElementsByTagName("img");
 			var imgsrc = imgtag[0].getAttribute("src");
 
-			var rawthumbLink = "http:" + imgsrc;
+			imgsrc = imgsrc.replace(httpsheader, '');
 			
 
+			// 生成原始大图路径 
 			var fisrtSlice = imgsrc.indexOf('/', 2) + 1;
 			var secondSlice = imgsrc.indexOf('/', fisrtSlice);
-
-
 			var replaceTarget =  imgsrc.substring(fisrtSlice, secondSlice);
-			// console.log(imgsrc[fisrtSlice], imgsrc[secondSlice]);
-			var largetImgLink = rawthumbLink.replace(replaceTarget, "large");	
+			 // console.log(imgsrc[fisrtSlice], imgsrc[secondSlice]);
+			 // console.log(imgsrc);
+			 // console.log(replaceTarget);
+			var largetImgLink = httpsheader + imgsrc.replace(replaceTarget, "large");	
 
-			var pelement = document.createElement("p");
+
+
+
+			var pelement = document.createElement("div");
 			pelement.innerHTML = largetImgLink;
  			
  			var tempId = ni.toString() + "-" + lni.toString();
 
 			pelement.setAttribute("class", "myp");
+			wpldiv.setAttribute("style", "word-wrap: break-word;");
 			pelement.setAttribute("src", largetImgLink);
 			pelement.setAttribute("id", tempId);
 			// pelement.setAttribute("id", tempId);
